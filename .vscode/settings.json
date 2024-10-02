@@ -19,6 +19,8 @@
     "i2c.h": "c",
     "esp_mac.h": "c",
     "gpio.h": "c",
-    "i2c_wrapper.h": "c"
+    "i2c_wrapper.h": "c",
+    "unistd.h": "c",
+    "defs.h": "c"
   }
 }

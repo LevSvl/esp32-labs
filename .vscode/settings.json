@@ -21,6 +21,9 @@
     "gpio.h": "c",
     "i2c_wrapper.h": "c",
     "unistd.h": "c",
-    "defs.h": "c"
+    "defs.h": "c",
+    "esp_intr_alloc.h": "c",
+    "freertos.h": "c",
+    "string.h": "c"
   }
 }

@@ -1,33 +1,31 @@
-#include "driver/gpio.h"
 #include "unistd.h"
+
+/* --- REGS --- */
+#define GPIO_BASE           0x3FF44000
+#define GPIO_ENABLE_REG     (GPIO_BASE+0x0020)
+#define GPIO_OUT_W1TS_REG   (GPIO_BASE+0x0008)
+#define GPIO_OUT_W1TC_REG   (GPIO_BASE+0x000c)
+/* ---      --- */
+
+/* --- FUNCS --- */
+#define W_GPIO_ENABLE_REG(val) ((*(volatile uint32_t*)GPIO_ENABLE_REG) = val)
+#define W_GPIO_OUT_W1TS_REG(val) ((*(volatile uint32_t*)GPIO_OUT_W1TS_REG) = val)
+#define W_GPIO_OUT_W1TC_REG(val) ((*(volatile uint32_t*)GPIO_OUT_W1TC_REG) = val)
+/* ---       --- */
 
 int
 app_main(int argc, char const *argv[])
 {
     // Настройка портов
-    int led_gpio = GPIO_NUM_2;
-    // int button_gpio = GPIO_NUM_16;
-
-    gpio_reset_pin(led_gpio);
-    // gpio_reset_pin(button_gpio);
-
-    // Пин светодиода - вывод, Пин кнопки - ввод
-    gpio_set_direction(led_gpio, GPIO_MODE_OUTPUT);
-    // gpio_set_direction(button_gpio, GPIO_MODE_INPUT);
-
-    // Изначальный сигнал от кнопки - 1
-    // gpio_set_pull_mode(button_gpio, GPIO_PULLUP_ONLY);
+    uint32_t led_gpio = 2;
+    
+    // Настройить на вывод
+    W_GPIO_ENABLE_REG(1 << led_gpio); // разрешить вывод
 
     while(1) {
-        // int button_level = gpio_get_level(button_gpio);
-
-        // if(button_level > 0)
-            gpio_set_level(led_gpio, 0);
-            
+        W_GPIO_OUT_W1TS_REG(1 << led_gpio);
         sleep(1);
-        // else
-            gpio_set_level(led_gpio, 1);
-
+        W_GPIO_OUT_W1TC_REG(1 << led_gpio);
         sleep(1);
     }
 

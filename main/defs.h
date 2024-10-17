@@ -41,4 +41,7 @@ i2c_master_msg(i2c_port_t i2c_port_num, uint8_t slave_addr,\
 // traps.c
 void configure_traps();
 
+// gpio.c
+void configure_gpio();
+
 #endif // _DEFS_H_
